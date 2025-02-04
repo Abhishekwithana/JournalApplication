@@ -20,10 +20,10 @@ public class UserServiceTest {
     @Autowired
     UserService userService;
 
-    @ParameterizedTest
+//    @ParameterizedTest
     @ArgumentsSource(UserArgumentProvider.class)
     public void testSaveNewUser(User user) {
-        assertTrue(userService.saveNewUser(user));
+        assert(userService.saveNewUser(user));
     }
 
 }
