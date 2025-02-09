@@ -1,15 +1,12 @@
 package net.engineeringdigest.journalApp.controller;
 
-import lombok.Getter;
+import net.engineeringdigest.journalApp.cache.AppCache;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -18,6 +15,9 @@ public class AdminController  {
 
     @Autowired
     UserService userSerivce;
+
+    @Autowired
+    AppCache appCache;
 
     @GetMapping("/all-users")
     public ResponseEntity<?> allUsers() {
@@ -31,5 +31,10 @@ public class AdminController  {
     @PostMapping("/create-admin-user")
     public void addAdmin(@RequestBody User user) {
         userSerivce.saveAdmin(user);
+    }
+
+    @GetMapping("clear-app-cache")
+    public void clearAppCache() {
+        appCache.init();
     }
 }
