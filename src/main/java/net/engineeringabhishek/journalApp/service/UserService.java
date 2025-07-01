@@ -31,7 +31,7 @@ public class UserService {
             return true;
         }catch (Exception e) {
             log.error("Error Occurred FOR user {}", userEntry.getUserName(), e);
-            log.info("hahahahehe");
+            log.info("User already Exists");
             log.warn("hahahahehe");
             log.debug("hahahahehe");
             log.trace("hahahahehe");

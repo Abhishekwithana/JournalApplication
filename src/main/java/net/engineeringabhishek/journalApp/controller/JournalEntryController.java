@@ -1,5 +1,6 @@
 package net.engineeringabhishek.journalApp.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.engineeringabhishek.journalApp.entity.JournalEntry;
 import net.engineeringabhishek.journalApp.entity.User;
 import net.engineeringabhishek.journalApp.service.JournalEntryService;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Tag(name = "Journal APIs")
 public class JournalEntryController {
 
 
@@ -51,14 +53,15 @@ public class JournalEntryController {
     }
 
     @GetMapping("/id/{myId}")
-    public ResponseEntity<?> getJournalEntryById(@PathVariable ObjectId myId) {
+    public ResponseEntity<?> getJournalEntryById(@PathVariable String myId) {
+        ObjectId objectId = new ObjectId(myId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUserName(userName);
-        List<JournalEntry> journalList = user.getJournalEntryList().stream().filter(x -> x.getId().equals(myId)).collect(Collectors.toList());
+        List<JournalEntry> journalList = user.getJournalEntryList().stream().filter(x -> x.getId().equals(objectId)).collect(Collectors.toList());
 
         if(!journalList.isEmpty()) {
-            Optional<JournalEntry> journalEntry = journalEntryService.getEntryById(myId);
+            Optional<JournalEntry> journalEntry = journalEntryService.getEntryById(objectId);
             if(journalEntry.isPresent()) {
                 return new ResponseEntity<JournalEntry>(journalEntry.get(), HttpStatus.OK);
             }

@@ -18,5 +18,4 @@
         <appender-ref ref="myConsoleAppender" />
         <appender-ref ref="myFileAppender" />
     </root>
-
 </configuration>
